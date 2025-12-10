@@ -1,4 +1,4 @@
-def main():
+def part_1():
     lines = []
     with open("trash.txt") as file:
         while line := file.readline():
@@ -13,6 +13,43 @@ def main():
             else:
                 acc[i] *= int(l[i])
     print(sum(acc))
+
+def part_2():
+    with open("trash.txt") as file:
+        [l1, l2, l3, l4, l5] = file.read().splitlines()
+        n_cols = len(l1)
+        acc = 0
+        operand = ''
+        nums = []
+        for c in range(n_cols):
+            c1, c2, c3, c4, c5 = l1[c], l2[c], l3[c], l4[c], l5[c]
+            if (c1,c2,c3,c4,c5) == (' ',' ',' ',' ',' '):
+                if operand == '+':
+                    acc += sum(nums)
+                else:
+                    product = 1
+                    for n in nums:
+                        product *= n
+                    acc += product
+                nums = []
+                continue
+            if c5 != ' ':
+                operand = c5
+            nums.append(int(c1+c2+c3+c4))
+        # last column logic
+        if operand == '+':
+            acc += sum(nums)
+        else:
+            product = 1
+            for n in nums:
+                product *= n
+            acc += product
+        print(acc)
+
+
+def main():
+    part_1()
+    part_2()
 
 
 
